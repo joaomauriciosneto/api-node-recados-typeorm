@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Usuario } from "../entities/Usuario";
 import { usuarioRepository } from "../repositories/usuario.repository";
 
 export class UsuarioController {
@@ -52,16 +53,102 @@ export class UsuarioController {
 
         try {
 
-            const usuarios = usuarioRepository.find({
-                relations: {
-                    recados: true
-                }
-            })
+            const usuarios = await usuarioRepository.find();
 
             return res.status(200).send({
                 ok: true,
                 message: 'Listagem de todos os usuários!',
                 data: usuarios
+            })
+            
+        } catch (error: any) {
+            
+            return res.status(500).send({
+                ok: false,
+                message: 'Instabilidade no servidor!',
+                error: error.toString()
+            })
+
+        }
+
+    }
+
+    async alterarUsuario(req: Request, res: Response) {
+
+        try {
+
+            const {idUsuario} = req.params;
+            const {email, senha} = req.body;
+
+            if(!email) {
+                return res.status(400).send({
+                    ok: false,
+                    message: 'Preencha o campo Email!'
+                })
+            }
+            
+            if(!senha) {
+                return res.status(500).send({
+                    ok: false,
+                    message: 'Preencha o campo Senha!'
+                })
+            }
+
+            const usuario = await usuarioRepository.findOneBy({id: Number(idUsuario)});
+
+            if(!usuario) {
+                return res.status(404).send({
+                    ok: false,
+                    message: 'Usuário não encontrado!'
+                })
+            }
+
+            await usuarioRepository.update({id: Number(idUsuario)}, {
+                email,
+                senha
+            })       
+
+            return res.status(200).send({
+                ok: true,
+                message: 'Usuário atualizado com sucesso!',
+                data: {
+                    email,
+                    senha
+                }
+            })
+
+        } catch (error: any) {
+            
+            return res.status(500).send({
+                ok: false,
+                message: 'Instabilidade no servidor!',
+                error: error.toString()
+            })
+
+        }
+
+    }
+
+    async deletarUsuario(req: Request, res: Response) {
+
+        try {
+
+            const {idUsuario} = req.params;
+
+            const usuario = await usuarioRepository.findOneBy({id: Number(idUsuario)});
+
+            if(!usuario) {
+                return res.status(404).send({
+                    ok: false,
+                    message: 'Usuário não encontrado!'
+                })
+            }
+
+            await usuarioRepository.delete({id: Number(idUsuario)});
+
+            return res.status(200).send({
+                ok: true,
+                message: 'Usuário excluído com sucesso!'
             })
             
         } catch (error: any) {
