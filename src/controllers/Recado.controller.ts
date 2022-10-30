@@ -89,9 +89,43 @@ export class RecadoController {
 
     }
 
+    async listarRecadosPorUsuario(req: Request, res: Response) {
+
+        try {
+
+            
+            return res.status(200).send({
+                ok: true,
+                message: 'Listando recados pelo usuário!'
+            })
+            
+        } catch (error: any) {
+            
+            return res.status(500).send({
+                ok: false,
+                message: 'Instabilidade no servidor!',
+                error: error.toString()
+            })
+
+        }
+
+    }
+
     async alterarRecado(req: Request, res: Response) {
 
-        // em construção
+        try {
+
+            
+
+        } catch (error: any) {
+            
+            return res.status(500).send({
+                ok: false,
+                message: 'Instabilidade no servidor!',
+                error: error.toString()
+            })
+
+        }
 
     }
 

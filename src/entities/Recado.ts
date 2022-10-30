@@ -19,10 +19,10 @@ export class Recado {
     @Column({type: 'text'})
     descricao: string;
 
-    @CreateDateColumn()
+    @CreateDateColumn({type: 'date'})
     data_criacao: Date;
 
-    @CreateDateColumn()
+    @CreateDateColumn({type: 'date'})
     data_atualiza: Date;
 
     @ManyToOne(() => Usuario, usuario => usuario.recados)

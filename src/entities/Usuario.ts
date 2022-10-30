@@ -1,4 +1,8 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { 
+    Column,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn } from "typeorm"
 import { Recado } from "./Recado"
 
 @Entity('usuarios')

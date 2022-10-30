@@ -16,4 +16,6 @@ routes.post('/recado/:idUsuario/criar', new RecadoController().criarRecado);
 
 routes.get('/recados', new RecadoController().listarRecados);
 
-// routes.put('/recado/:idUsuario/:idRecado', new RecadoController().alterarRecado);
+routes.get('/recado/usuario/:idUsuario', new RecadoController().listarRecadosPorUsuario);
+
+routes.put('/recado/:idUsuario/:idRecado', new RecadoController().alterarRecado);
