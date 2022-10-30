@@ -1,23 +1,29 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { 
+    Column,
+    CreateDateColumn,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn } from "typeorm";
 import { Usuario } from "./Usuario";
 
 @Entity('recados')
 export class Recado {
 
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
     @Column({type: 'text'})
-    titulo: string
+    titulo: string;
 
     @Column({type: 'text'})
-    descricao: string
+    descricao: string;
 
-    @Column({type: 'text'})
-    data_criacao: string
+    @CreateDateColumn()
+    data_criacao: Date;
 
-    @Column({type: 'text'})
-    data_atualiza: string
+    @CreateDateColumn()
+    data_atualiza: Date;
 
     @ManyToOne(() => Usuario, usuario => usuario.recados)
     @JoinColumn({name: 'id_usuario'})

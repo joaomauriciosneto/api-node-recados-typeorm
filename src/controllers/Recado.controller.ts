@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import test from "node:test";
 import { recadoRepository } from "../repositories/recado.repository";
 import { usuarioRepository } from "../repositories/usuario.repository";
 
@@ -6,7 +7,7 @@ export class RecadoController {
 
     async criarRecado(req: Request, res: Response) {
 
-        const {titulo, descricao, data_criacao, data_atualiza} = req.body;
+        const {titulo, descricao} = req.body;
         const {idUsuario} = req.params;
 
         if(!titulo) {
@@ -20,13 +21,6 @@ export class RecadoController {
             return res.status(400).send({
                 ok: false,
                 message: 'Preencha o campo Descrição!'
-            })
-        }
-
-        if(!data_criacao) {
-            return res.status(400).send({
-                ok: false,
-                message: 'Preencha o campo Data de criação!'
             })
         }
 
@@ -44,8 +38,6 @@ export class RecadoController {
             const novoRecado = recadoRepository.create({
                 titulo,
                 descricao,
-                data_criacao,
-                data_atualiza,
                 usuario
             });
 
@@ -94,6 +86,12 @@ export class RecadoController {
             })
 
         }
+
+    }
+
+    async alterarRecado(req: Request, res: Response) {
+
+        // em construção
 
     }
 

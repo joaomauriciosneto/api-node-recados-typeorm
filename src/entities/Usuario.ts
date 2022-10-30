@@ -7,10 +7,10 @@ export class Usuario {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({type: 'text', nullable: true})
+    @Column({type: 'text'})
     email: string
 
-    @Column({type: 'text', nullable: true})
+    @Column({type: 'text'})
     senha: string
 
     @OneToMany(() => Recado, recado => recado.usuario)
