@@ -135,8 +135,10 @@ export class RecadoController {
                 })
             }
 
-            const recado = await recadoRepository.findOneBy({id: Number(idRecado), 
-            usuario: {id: usuario.id}});
+            const recado = await recadoRepository.findOneBy({
+                id: Number(idRecado), 
+                usuario: {id: usuario.id}
+                });
 
             if(!recado) {
                 return res.status(404).send({
@@ -193,7 +195,7 @@ export class RecadoController {
             
             return res.status(500).send({
                 ok: false,
-                message: 'Instabilidaden o servidor!',
+                message: 'Instabilidade no servidor!',
                 error: error.toString()
             })
 
