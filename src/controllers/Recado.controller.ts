@@ -93,10 +93,18 @@ export class RecadoController {
 
         try {
 
-            
+            const {idUsuario} = req.params;
+
+            const usuarioRecado = await recadoRepository.find({
+                where: {
+                    usuario: {id: Number(idUsuario)}
+                }
+            })
+
             return res.status(200).send({
                 ok: true,
-                message: 'Listando recados pelo usuário!'
+                message: 'Recado listado por usuário!',
+                data: usuarioRecado
             })
             
         } catch (error: any) {
@@ -115,13 +123,77 @@ export class RecadoController {
 
         try {
 
-            
+            const {idUsuario,idRecado} = req.params;
+            const {titulo, descricao} = req.body;
+
+            const usuario = await usuarioRepository.findOneBy({id: Number(idUsuario)});
+
+            if(!usuario) {
+                return res.status(404).send({
+                    ok: false,
+                    message: 'Usuário não existe!'
+                })
+            }
+
+            const recado = await recadoRepository.findOneBy({id: Number(idRecado), 
+            usuario: {id: usuario.id}});
+
+            if(!recado) {
+                return res.status(404).send({
+                    ok: false,
+                    message: 'Recado não existe!'
+                })
+            }
+
+            recado.descricao = descricao;
+            recado.titulo = titulo;
+
+            await recadoRepository.save(recado);
+
+            return res.status(200).send({
+                ok: true,
+                message: 'Recado alterado com sucesso!'
+            })
 
         } catch (error: any) {
             
             return res.status(500).send({
                 ok: false,
                 message: 'Instabilidade no servidor!',
+                error: error.toString()
+            })
+
+        }
+
+    }
+
+    async deletarRecadoPorUsuario(req: Request, res: Response) {
+
+        try {
+
+            const {idRecado} = req.params;
+
+            const recadoUsuario = await recadoRepository.findOneBy({id: Number(idRecado)});
+
+            if(!recadoUsuario) {
+                return res.status(404).send({
+                    ok: false,
+                    message: 'Recado não existe!'
+                })
+            }
+
+            await recadoRepository.delete(recadoUsuario);
+
+            return res.status(200).send({
+                ok: true,
+                message: 'Recado excluído com sucesso!'
+            })
+            
+        } catch (error: any) {
+            
+            return res.status(500).send({
+                ok: false,
+                message: 'Instabilidaden o servidor!',
                 error: error.toString()
             })
 

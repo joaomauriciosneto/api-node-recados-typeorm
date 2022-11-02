@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Usuario } from "../entities/Usuario";
+import { recadoRepository } from "../repositories/recado.repository";
 import { usuarioRepository } from "../repositories/usuario.repository";
 
 export class UsuarioController {
@@ -143,6 +144,20 @@ export class UsuarioController {
                     message: 'Usuário não encontrado!'
                 })
             }
+
+            const recados= await recadoRepository.findBy({
+                usuario: {
+                    id: Number(idUsuario)
+                }
+            })
+
+            if(recados && recados.length > 0) {
+                await recadoRepository.delete({
+                    usuario: {
+                        id: Number(idUsuario)
+                    }
+                })
+            }         
 
             await usuarioRepository.delete({id: Number(idUsuario)});
 

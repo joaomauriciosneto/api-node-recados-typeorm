@@ -19,3 +19,5 @@ routes.get('/recados', new RecadoController().listarRecados);
 routes.get('/recado/usuario/:idUsuario', new RecadoController().listarRecadosPorUsuario);
 
 routes.put('/recado/:idUsuario/:idRecado', new RecadoController().alterarRecado);
+
+routes.delete('/recado/deletar/:idRecado', new RecadoController().deletarRecadoPorUsuario);
