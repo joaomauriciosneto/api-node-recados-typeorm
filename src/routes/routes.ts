@@ -1,8 +1,16 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { RecadoController } from "../controllers/Recado.controller";
 import { UsuarioController } from "../controllers/Usuario.controller";
 
 export const routes = Router();
+
+routes.get('/terms', (req: Request, res: Response) => {
+
+    return res.json({
+        message: 'Termos do serviço'
+    });
+
+});
 
 routes.post('/usuario', new UsuarioController().criarUsuario);
 

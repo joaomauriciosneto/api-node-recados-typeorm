@@ -101,7 +101,7 @@ export class RecadoController {
                 }
             })
 
-            if(usuarioRecado == null || usuarioRecado.length == 0) {
+            if(usuarioRecado == null || usuarioRecado.length == 0 ) {
                 return res.status(404).send({
                     ok: false,
                     message: 'Usuário não encontrado!'

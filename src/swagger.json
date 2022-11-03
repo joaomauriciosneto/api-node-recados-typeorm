@@ -1,0 +1,377 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Recados com Node, Express, TypeORM e PostgreSQL",
+        "description": "Desenvolvido por `João Maurício`, estudante fullstack.",
+        "termsOfService": "http://localhost:3333/v1/terms",
+        "contact": {
+            "email": "joaomauricio1975@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3333/v1",
+            "description": "Api em desenvolvimento"
+        }
+    ],
+    "paths": {
+        "/usuario": {
+            "post": {
+                "summary": "Cadastro de usuários",
+                "description": "Essa rota é responsável pelo cadastro de usuários no sistema.",
+                "tags": ["Usuarios"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Usuario"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "email": "xaman@x.com",
+                                        "senha": "123456"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Esse usuário já existe no sistema!"
+                    },
+                    "201": {
+                        "description": "Usuário cadastrado com sucesso!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Usuario"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios": {
+            "get": {
+                "description": "Listando todos os usuários",
+                "summary": "Listando todos os usuários do sistema",
+                "tags": ["Usuarios"],
+                "responses": {
+                    "200": {
+                        "description": "Usuários do sistema",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Usuario"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuario/{id}": {
+            "put": {
+                "description": "Alterando usuário",
+                "summary": "Alterando o login do usuário",
+                "tags": ["Usuarios"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Usuário pelo ID",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Usuario"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "email": "email",
+                                        "senha": "123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Atualizado com sucesso!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Usuario"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletando o usuário",
+                "summary": "Deletando o usuário do sistema",
+                "tags": ["Usuarios"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Usuário pelo ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário deletado com sucesso!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Usuario"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recado/{id}/criar": {
+            "post": {
+                "summary": "Cadastro de recados",
+                "description": "Essa rota é responsável pelo cadastro dos recados",
+                "tags": ["Recados"],
+                "parameters": [
+                    {   
+                        "name": "id",
+                        "in": "path",
+                        "description": "Criando recado pelo ID do usuário",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Recado"
+                            },
+                            "examples": {
+                                "recado": {
+                                    "value": {
+                                        "titulo": "titulo do recado",
+                                        "descricao": "descrição do recado"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "Usuário não encontrado"
+                    },
+                    "201": {
+                        "description": "Recado cadastrado com sucesso!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Recado"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recados": {
+            "get": {
+                "description": "Listando todos os recados",
+                "summary": "Listando todos os recados dos usuários",
+                "tags": ["Recados"],
+                "responses": {
+                    "200": {
+                        "description": "Recados dos usuários",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Recado"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recado/usuario/{id}": {
+            "get": {
+                "description": "Listando recado pelo ID do usuário",
+                "summary": "Listando recados pelo ID do usuário",
+                "tags": ["Recados"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Recado pelo ID do usuário",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Usuário não encontrado!"
+                    },
+                    "200": {
+                        "description": "Listando os recados do usuário selecionado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Recado"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recado/{id}/{id2}": {
+            "put": {
+                "description": "Alterando o recado",
+                "summary": "Alteração do recado por usuário",
+                "tags": ["Recados"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true
+                    },
+                    {
+                        "name": "id2",
+                        "in": "path",
+                        "description": "ID do recado",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Recado"
+                            },
+                            "examples": {
+                                "recado": {
+                                    "value": {
+                                        "titulo": "novo título do recado",
+                                        "descricao": "nova descrição do recado"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "Usuário e/ou recado inexistente"
+                    },
+                    "200": {
+                        "description": "Recado atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Recado"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recado/deletar/{id}": {
+            "delete": {
+                "description": "Deletando recado",
+                "summary": "Deletando recado do usuário",
+                "tags": ["Recados"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Recado por ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Recado não existente"
+                    },
+                    "200": {
+                        "description": "Recado excluído com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Recado"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Usuario": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "senha": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Recado": {
+                "type": "object",
+                "properties": {
+                    "idRecado": {
+                        "type": "number"
+                    },
+                    "titulo": {
+                        "type": "string"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "data_criacao": {
+                        "type": "date"
+                    },
+                    "data_atualizacao": {
+                        "type": "date"
+                    },
+                    "idUsuario": {
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    }
+}

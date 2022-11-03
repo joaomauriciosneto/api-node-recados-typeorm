@@ -30,7 +30,7 @@ export class UsuarioController {
                 senha
             })
 
-            await usuarioRepository.save(novoUsuario);
+            await usuarioRepository.save(novoUsuario);           
 
             return res.status(201).send({
                 ok: true,
