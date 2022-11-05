@@ -23,6 +23,19 @@ export class UsuarioController {
             })
         }
 
+        const retornoUsuario = await usuarioRepository.find({
+            where: {
+                email: email
+            }
+        })
+
+        if(retornoUsuario.length > 0) {
+            return res.status(400).send({
+                ok: false,
+                message: 'Usuário já cadastrado no sistema!'
+            })
+        }
+
         try {
 
             const novoUsuario = usuarioRepository.create({
