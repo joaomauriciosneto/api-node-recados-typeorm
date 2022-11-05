@@ -56,6 +56,13 @@ export class UsuarioController {
 
             const usuarios = await usuarioRepository.find();
 
+            if(usuarios == null || usuarios.length == 0) {
+                return res.status(400).send({
+                    ok: false,
+                    message: 'Não existem usuários para serem listados no momento!'
+                })
+            };
+
             return res.status(200).send({
                 ok: true,
                 message: 'Listagem de todos os usuários!',

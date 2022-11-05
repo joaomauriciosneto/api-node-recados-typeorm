@@ -95,13 +95,6 @@ export class RecadoController {
 
             const {idUsuario} = req.params;
 
-            if(!idUsuario) {
-                return res.status(400).send({
-                    ok: false,
-                    message: 'Digite o ID do usuário!'
-                })
-            }
-
             const usuarioRecado = await recadoRepository.find({
                 where: {
                     usuario: {id: Number(idUsuario)}

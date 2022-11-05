@@ -7,6 +7,7 @@
 ### 4. npx tsc --init
 
 # Criando as tabelas:
+### Criar o banco de dados no postgres e configurar o data-source.ts
 ### Depois de configurar o "script" no package.json, digitar a seguinte linha de código: npm run migration:generate (lembrar de rodar esse comando depois de criar a migration)
 ### Depois de todas as migrations criadas, digitar: npm run migration:run (a mágica acontece)
 
